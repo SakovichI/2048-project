@@ -7,5 +7,5 @@ import { ChangeDetectionStrategy, Component, input } from '@angular/core';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SectionHeaderComponent {
-  readonly $title = input('', { alias: 'title' });
+  readonly $title = input<string | number>('', { alias: 'title' });
 }

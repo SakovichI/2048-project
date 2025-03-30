@@ -1,1 +1,16 @@
-<app-game />
+<div class="container">
+  <app-section-header [title]="gameCellMaxValue">
+    <app-game-score [score]="$score()" />
+    <app-button text="Restart Game!" (click)="onRestartGame()" />
+  </app-section-header>
+
+  <app-section-content [tableSize]="$tableSize()">
+    @if (this.$isGameEnd()) {
+      <app-overlay />
+    } @else {
+      @for (cellItem of $cellItems(); let index = $index; track $index) {
+        <app-game-cell-item [cellItem]="cellItem" [ngStyle]="getStyles(cellItem)" />
+      }
+    }
+  </app-section-content>
+</div>

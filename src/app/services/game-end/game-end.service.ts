@@ -1,5 +1,6 @@
 import { Injectable, signal } from '@angular/core';
 import { GameCellItem } from '../../models';
+import { GAME_CELL_MAX_VALUE } from '../../constants';
 
 @Injectable()
 export class GameEndService {
@@ -12,7 +13,7 @@ export class GameEndService {
   }
 
   stopGame(mergedItems: GameCellItem[]): void {
-    const isGameOver = (item: GameCellItem): boolean => item.value === 2048;
+    const isGameOver = (item: GameCellItem): boolean => item.value === GAME_CELL_MAX_VALUE;
 
     this.#setIsEndGame(!!mergedItems.find(isGameOver));
   }

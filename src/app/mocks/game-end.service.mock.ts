@@ -1,5 +1,5 @@
 import { signal } from '@angular/core';
-import { EntityMock } from '../../../core';
+import { EntityMock } from '../core';
 import { GameCellItem } from '../models';
 import { GameEndService } from '../services';
 

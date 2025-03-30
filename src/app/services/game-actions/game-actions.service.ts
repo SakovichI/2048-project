@@ -2,7 +2,7 @@ import { inject, Injectable } from '@angular/core';
 import { GameKeyEventCode, GameMoveDirections } from '../../enums';
 import { GameCellItem, GameTableSize } from '../../models';
 import { GameMovesService } from '../game-moves';
-import { Nullable } from '../../../../core';
+import { Nullable } from '../../core';
 
 @Injectable()
 export class GameActionsService {

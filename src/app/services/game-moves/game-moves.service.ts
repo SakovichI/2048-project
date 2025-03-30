@@ -1,9 +1,10 @@
-import { GameTableSize } from './../../models';
+import { GameTableSize } from '../../models';
 import { inject, Injectable } from '@angular/core';
 import { GameCellItem } from '../../models';
 import { GameMovesDimension } from './models';
-import { Nullable } from 'Users/igorsakovic/Documents/2048-project/src/app/core';
+
 import { GameEndService } from '../game-end';
+import { Nullable } from '../../core';
 
 @Injectable()
 export class GameMovesService {
