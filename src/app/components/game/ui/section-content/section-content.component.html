@@ -1,28 +1,11 @@
 <div class="grid-container">
-  <div class="grid-row">
-    <div class="grid-cell"></div>
-    <div class="grid-cell"></div>
-    <div class="grid-cell"></div>
-    <div class="grid-cell"></div>
-  </div>
-  <div class="grid-row">
-    <div class="grid-cell"></div>
-    <div class="grid-cell"></div>
-    <div class="grid-cell"></div>
-    <div class="grid-cell"></div>
-  </div>
-  <div class="grid-row">
-    <div class="grid-cell"></div>
-    <div class="grid-cell"></div>
-    <div class="grid-cell"></div>
-    <div class="grid-cell"></div>
-  </div>
-  <div class="grid-row">
-    <div class="grid-cell"></div>
-    <div class="grid-cell"></div>
-    <div class="grid-cell"></div>
-    <div class="grid-cell"></div>
-  </div>
+  @for (row of $rows(); let index = $index; track index) {
+    <div class="grid-row">
+      @for (col of $rows(); let index = $index; track index) {
+        <div class="grid-cell"></div>
+      }
+    </div>
+  }
 
   <ng-content />
 </div>

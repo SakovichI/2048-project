@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, input } from '@angular/core';
 
 @Component({
   selector: 'app-section-content',
@@ -7,5 +7,6 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SectionContentComponent {
-  constructor() {}
+  readonly $tableSize = input.required<number>({ alias: 'tableSize' });
+  readonly $rows = computed(() => Array.from({ length: this.$tableSize() }, (_, i) => i));
 }

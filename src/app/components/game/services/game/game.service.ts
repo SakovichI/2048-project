@@ -5,6 +5,7 @@ import { GAME_TABLE_SIZE } from '../../constants';
 import { GameCellItemsService } from '../game-cell-items';
 import { GameKeyEventCode } from '../../enums';
 import { GameScoreService } from '../game-score/game-score.service';
+import { GameEndService } from '../game-end';
 
 @Injectable({
   providedIn: 'root',
@@ -13,12 +14,14 @@ export class GameService {
   readonly #gameActionsService = inject(GameActionsService);
   readonly #gameCellItemsService = inject(GameCellItemsService);
   readonly #gameScoreService = inject(GameScoreService);
+  readonly #gameEndService = inject(GameEndService);
 
   readonly #tableSizeSignal = signal<GameTableSize>(GAME_TABLE_SIZE);
 
   readonly $tableSize = this.#tableSizeSignal.asReadonly();
   readonly $cellItems = this.#gameCellItemsService.$cellItems;
   readonly $score = this.#gameScoreService.$score;
+  readonly $isGameEnd = this.#gameEndService.$isGameEnd;
 
   constructor() {
     this.generateItems();
@@ -26,18 +29,19 @@ export class GameService {
 
   resetGame(): void {
     this.#gameScoreService.resetScore();
+    this.#gameEndService.resetResult();
     this.#gameCellItemsService.resetCellItems();
     this.generateItems();
   }
 
   moveAction(event: KeyboardEvent): void {
-    if (!this.#isGameKeyEventCode(event.code)) return;
+    if (!this.#isGameKeyEventCode(event.code) || this.$isGameEnd()) return;
 
     const mergedItems = this.#gameActionsService.handleAction(event.code, this.$cellItems(), this.$tableSize());
 
     this.#gameCellItemsService.clearDeletedItems(this.$cellItems());
-    this.#gameCellItemsService.updateCellItems(mergedItems);
-    this.#gameScoreService.summaryScoreValue(mergedItems);
+    this.#gameCellItemsService.updateCellItems(mergedItems!);
+    this.#gameScoreService.summaryScoreValue(mergedItems!);
     this.#gameCellItemsService.generateItems();
   }
 

@@ -1,0 +1,14 @@
+:host {
+  position: absolute;
+  inset: 0;
+  background-color: var(--brow-cell-03);
+}
+
+.overlay-text {
+  font-size: 60px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: rgb(98 101 103);
+}

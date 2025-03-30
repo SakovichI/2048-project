@@ -9,16 +9,6 @@ export class GameCellItemsService {
   readonly $cellItems = this.#cellItemsSignal.asReadonly();
   readonly $availableCells = this.#availableCellsSignal.asReadonly();
 
-  get emptyCells(): number[] {
-    const notEmptyCells = this.notEmptyCells;
-
-    return this.$availableCells().filter((position) => !notEmptyCells.includes(position));
-  }
-
-  get notEmptyCells(): number[] {
-    return this.$cellItems().map((item) => item.row * 10 + item.col);
-  }
-
   resetCellItems(): void {
     this.#setCellItems([]);
   }
@@ -34,11 +24,12 @@ export class GameCellItemsService {
   }
 
   generateItems(length = 2): void {
-    const positions: number[] = this.emptyCells.sort(() => Math.random() - 0.5).slice(0, length);
-
+    const toRandomPosition = (): number => Math.random() - 0.5;
+    const positions: number[] = this.#emptyCells().sort(toRandomPosition).slice(0, length);
     const toCellItem = (position: number): GameCellItem => {
       return { value: 2, col: position % 10, row: (position - (position % 10)) / 10 };
     };
+
     const newCellItems = positions.map(toCellItem);
 
     const result = [...this.$cellItems(), ...newCellItems];
@@ -64,5 +55,15 @@ export class GameCellItemsService {
 
   #setAvailableCells(value: number[]): void {
     this.#availableCellsSignal.set(value);
+  }
+
+  #emptyCells(): number[] {
+    const notEmptyCells = this.#notEmptyCells();
+
+    return this.$availableCells().filter((position) => !notEmptyCells.includes(position));
+  }
+
+  #notEmptyCells(): number[] {
+    return this.$cellItems().map((item) => item.row * 10 + item.col);
   }
 }

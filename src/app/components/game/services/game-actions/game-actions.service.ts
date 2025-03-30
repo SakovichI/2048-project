@@ -2,7 +2,7 @@ import { inject, Injectable } from '@angular/core';
 import { GameKeyEventCode, GameMoveDirections } from '../../enums';
 import { GameCellItem, GameTableSize } from '../../models';
 import { GameMovesService } from '../game-moves';
-import { Nullable } from '../../../../../core';
+import { Nullable } from '../../../../core';
 
 @Injectable()
 export class GameActionsService {
@@ -19,30 +19,33 @@ export class GameActionsService {
     [GameKeyEventCode.KeyA, GameMoveDirections.Left],
   ]);
 
-  readonly #keyEventActionsMap = new Map<GameMoveDirections, (gameCellItems: GameCellItem[], size: GameTableSize) => GameCellItem[]>([
+  readonly #keyEventActionsMap = new Map<
+    GameMoveDirections,
+    (gameCellItems: GameCellItem[], size: GameTableSize) => Nullable<GameCellItem[]>
+  >([
     [
       GameMoveDirections.Right,
-      (gameCellItems: GameCellItem[], size: GameTableSize): GameCellItem[] =>
+      (gameCellItems: GameCellItem[], size: GameTableSize): Nullable<GameCellItem[]> =>
         this.#gameMovesService.move(gameCellItems, size, 'row', 'col', true),
     ],
     [
       GameMoveDirections.Left,
-      (gameCellItems: GameCellItem[], size: GameTableSize): GameCellItem[] =>
+      (gameCellItems: GameCellItem[], size: GameTableSize): Nullable<GameCellItem[]> =>
         this.#gameMovesService.move(gameCellItems, size, 'row', 'col', false),
     ],
     [
       GameMoveDirections.Up,
-      (gameCellItems: GameCellItem[], size: GameTableSize): GameCellItem[] =>
+      (gameCellItems: GameCellItem[], size: GameTableSize): Nullable<GameCellItem[]> =>
         this.#gameMovesService.move(gameCellItems, size, 'col', 'row', false),
     ],
     [
       GameMoveDirections.Down,
-      (gameCellItems: GameCellItem[], size: GameTableSize): GameCellItem[] =>
+      (gameCellItems: GameCellItem[], size: GameTableSize): Nullable<GameCellItem[]> =>
         this.#gameMovesService.move(gameCellItems, size, 'col', 'row', true),
     ],
   ]);
 
-  handleAction(keyEventCode: GameKeyEventCode, gameCellItems: GameCellItem[], size: GameTableSize): GameCellItem[] {
+  handleAction(keyEventCode: GameKeyEventCode, gameCellItems: GameCellItem[], size: GameTableSize): Nullable<GameCellItem[]> {
     return this.#getEventAction(keyEventCode, gameCellItems, size);
   }
 
@@ -54,7 +57,7 @@ export class GameActionsService {
     return moveDirection;
   }
 
-  #getEventAction(keyEventCode: GameKeyEventCode, gameCellItems: GameCellItem[], size: GameTableSize): GameCellItem[] {
+  #getEventAction(keyEventCode: GameKeyEventCode, gameCellItems: GameCellItem[], size: GameTableSize): Nullable<GameCellItem[]> {
     const moveDirection = this.#getMoveDirection(keyEventCode);
     const action = moveDirection ? this.#keyEventActionsMap.get(moveDirection) || null : null;
 
