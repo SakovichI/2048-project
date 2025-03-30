@@ -39,7 +39,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:application",
           "options": {
-            "outputPath": "dist/2048-project",
+            "outputPath": "docs/",
             "index": "src/index.html",
             "browser": "src/main.ts",
             "polyfills": ["zone.js"],
@@ -51,7 +51,7 @@
                 "input": "public"
               }
             ],
-            "styles": ["src/styles.scss"],
+            "styles": ["node_modules/normalize.css/normalize.css", "src/styles.scss"],
             "scripts": []
           },
           "configurations": {
@@ -97,6 +97,12 @@
           "builder": "@angular-builders/jest:run",
           "options": {
             "no-cache": true
+          }
+        },
+        "lint": {
+          "builder": "@angular-eslint/builder:lint",
+          "options": {
+            "lintFilePatterns": ["src/**/*.ts", "src/**/*.html", "src/**/*.scss"]
           }
         }
       }

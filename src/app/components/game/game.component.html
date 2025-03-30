@@ -1,0 +1,9 @@
+<app-section-header title="2048">
+  <app-game-score [score]="$score()" />
+  <app-button text="Restart Game!" (click)="onRestartGame()" />
+</app-section-header>
+<app-section-content>
+  @for (cellItem of $cellItems(); let index = $index; track $index) {
+    <app-game-cell-item [cellItem]="cellItem" [style]="this.getStyles(cellItem)" />
+  }
+</app-section-content>

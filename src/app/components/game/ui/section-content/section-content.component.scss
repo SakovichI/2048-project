@@ -1,0 +1,27 @@
+.grid-container {
+  display: inline-block;
+  position: relative;
+  background-color: #bbada0;
+  padding: 10px;
+  border-radius: 10px;
+}
+
+.grid-row {
+  margin-bottom: 6px;
+}
+
+.grid-row:last-of-type {
+  margin: 0;
+}
+
+.grid-cell {
+  display: inline-block;
+  width: 100px;
+  height: 100px;
+  margin-right: 10px;
+  background-color: var(--brow-cell-03);
+}
+
+.grid-cell:last-of-type {
+  margin: 0;
+}

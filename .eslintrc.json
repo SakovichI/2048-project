@@ -1,40 +1,27 @@
 {
   "root": true,
-  "ignorePatterns": ["**/*"],
-  "plugins": ["@nx"],
+  "env": {
+    "browser": true,
+    "es2022": true,
+    "jest": true
+  },
+  "parserOptions": {
+    "ecmaVersion": 2022,
+    "sourceType": "module"
+  },
   "overrides": [
     {
-      "files": ["*.ts", "*.js"],
-      "rules": {
-        "@nx/enforce-module-boundaries": [
-          "error",
-          {
-            "allow": ["jest.config"]
-          }
-        ]
-      }
-    },
-    {
-      "files": ["*.js"],
-      "extends": ["plugin:@nx/javascript"],
-      "rules": {}
-    },
-    {
       "files": ["*.ts"],
+      "parser": "@typescript-eslint/parser",
       "parserOptions": {
-        "project": ["tsconfig.base.json"],
-        "createDefaultProgram": true
+        "project": ["./tsconfig.json", "./tsconfig.spec.json"]
       },
-      "extends": [
-        "plugin:@nx/typescript",
-        "plugin:import/recommended",
-        "plugin:prettier/recommended"
-      ],
-      "plugins": ["rxjs", "rxjs-angular"],
+      "plugins": ["@typescript-eslint", "@angular-eslint"],
+      "extends": ["eslint:recommended", "plugin:@typescript-eslint/recommended", "plugin:@angular-eslint/recommended"],
       "settings": {
         "import/resolver": {
           "typescript": {
-            "project": ["tsconfig.base.json", "libs/*/tsconfig.json"]
+            "project": ["./tsconfig.json", "./tsconfig.spec.json"]
           }
         }
       },
@@ -119,6 +106,11 @@
           {
             "selector": "typeLike",
             "format": ["PascalCase"]
+          },
+          {
+            "selector": "property",
+            "modifiers": ["requiresQuotes"],
+            "format": null
           }
         ],
         "@typescript-eslint/no-empty-function": "off",
@@ -141,37 +133,6 @@
         ],
         "@typescript-eslint/adjacent-overload-signatures": "off",
         "no-prototype-builtins": "off",
-        "import/order": [
-          "error",
-          {
-            "alphabetize": {
-              "order": "asc",
-              "caseInsensitive": false
-            },
-            "groups": ["builtin", "external", "internal", "parent", "index"],
-            "pathGroups": [
-              {
-                "pattern": "@monowork/**",
-                "group": "internal",
-                "position": "before"
-              },
-              {
-                "pattern": "@sparta/**",
-                "group": "internal"
-              },
-              {
-                "pattern": "../**",
-                "group": "parent"
-              },
-              {
-                "pattern": "./**",
-                "group": "index"
-              }
-            ],
-            "pathGroupsExcludedImportTypes": [],
-            "newlines-between": "always"
-          }
-        ],
         "no-console": [
           "error",
           {
@@ -229,22 +190,6 @@
             "prev": ["case", "default"],
             "next": ["case", "default"]
           }
-        ],
-        "rxjs-angular/prefer-takeuntil": [
-          "error",
-          {
-            "alias": ["takeUntilDestroyed"],
-            "checkComplete": true,
-            "checkDecorators": ["Component", "Directive"],
-            "checkDestroy": false
-          }
-        ],
-        "rxjs/no-nested-subscribe": "error",
-        "rxjs/no-unsafe-takeuntil": [
-          "error",
-          {
-            "alias": ["takeUntilDestroyed"]
-          }
         ]
       }
     },
@@ -285,7 +230,7 @@
     },
     {
       "files": ["*.component.html"],
-      "extends": ["plugin:prettier/recommended", "plugin:@nx/angular-template"],
+      "extends": ["plugin:prettier/recommended", "plugin:@angular-eslint/template/recommended"],
       "rules": {
         "@angular-eslint/template/prefer-self-closing-tags": "error",
         "@angular-eslint/template/prefer-control-flow": "warn",
