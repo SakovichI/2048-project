@@ -23,5 +23,14 @@ module.exports = {
       statements: 80,
     },
   },
-  collectCoverageFrom: ['<rootDir>/**/*.ts', '!<rootDir>/**/*.mock.ts'],
+  collectCoverageFrom: [
+    '<rootDir>/**/*.ts',
+    '!<rootDir>/**/*.mock.ts',
+    '!<rootDir>/**/index.ts',
+    '!<rootDir>/**/main.ts',
+    '!<rootDir>/**/app.config.ts',
+    '!<rootDir>/**/*.mock.ts',
+    '!<rootDir>/**/*.enum.ts',
+    '!<rootDir>/**/*.const.ts',
+  ],
 };
